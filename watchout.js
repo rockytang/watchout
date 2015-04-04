@@ -2,7 +2,7 @@
 
 var points = 0;
 var highScore = 0;
-var enemies = [{id:1},{id:2},{id:3}];
+var enemies = [];
 var playerList = [{id:1}];
 var player = null;
 
@@ -21,24 +21,40 @@ var drag = d3.behavior.drag()
     player.attr("cy", startPosY + d3.event.dy);
   });
 
+var CreatePlayer = function()
+{
+  var playerObject = canvas.selectAll(".player").data(playerList, function(d)
+  { return d.id; }
+  );
+
+
+  player = playerObject.enter()
+  .append("circle")
+  .attr("class", "player")
+  .attr("cx", 400)
+  .attr("cy", 400)
+  .attr("r", 10)
+  .style("fill", "blue");
+  player.call(drag);
+}
+
+var CreateEnemies = function()
+{
+  for(var i = 1; i <= 20; i++)
+  {
+    enemies.push({id:i});
+  }
+}
+
+CreatePlayer();
+CreateEnemies();
+
+
 var Update = function(data){
   UpdateScore();
   UpdateEnemies();
 }
 
-var playerObject = canvas.selectAll(".player").data(playerList, function(d)
-  { return d.id; }
-  );
-
-
-player = playerObject.enter()
-.append("circle")
-.attr("class", "player")
-.attr("cx", 400)
-.attr("cy", 400)
-.attr("r", 10)
-.style("fill", "blue");
-player.call(drag);
 
 setInterval(function(){Update()}, 1000);
 
