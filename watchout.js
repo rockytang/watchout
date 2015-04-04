@@ -40,7 +40,7 @@ var CreatePlayer = function()
 
 var CreateEnemies = function()
 {
-  for(var i = 1; i <= 20; i++)
+  for(var i = 1; i <= 30; i++)
   {
     enemies.push({id:i});
   }
@@ -52,11 +52,12 @@ CreateEnemies();
 
 var Update = function(data){
   UpdateScore();
-  UpdateEnemies();
+  // UpdateEnemies();
 }
 
 
-setInterval(function(){Update()}, 1000);
+setInterval(function(){Update()}, 500);
+setInterval(function(){UpdateEnemies();}, 2000);
 
 var ResetScore = function(){
   points = 0;
@@ -81,7 +82,7 @@ var UpdateEnemies = function(){
   .attr("r", 20);
 
   selectEnemies
-  .transition().duration(1000).tween("custom", function()
+  .transition().duration(2000).tween("custom", function()
   {
     var temp = d3.select(this);
     var startPosX = parseFloat(temp.attr("cx"));
